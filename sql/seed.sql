@@ -6,7 +6,7 @@ VALUES ('John', 'Doe', 5, 1),
 
 
 INSERT INTO role(title, salary, department_id)
-VALUES ('Manager', 200.000.00)
+VALUES ('Manager', 200000.00, 2)
 
 
 INSERT INTO department(id, name)
