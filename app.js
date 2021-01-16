@@ -32,7 +32,7 @@ function Menu() {
               type: 'list',
               name: 'adding',
               message: 'What would you like to add?',
-              choices: ['Department', 'Role', 'Employee']
+              choices: ['Department', 'Role', 'Employee', 'Finish']
             }
           ])
             .then(({ adding }) => {
@@ -185,6 +185,36 @@ function Menu() {
             })
             .catch(err => console.log(err))
           break;
+        case 'Update':
+          inquirer.prompt([
+            {
+              type: 'list',
+              name: 'type',
+              message: 'What table would you like to update?',
+              choices: ['Employees', 'Roles', 'Departments']
+            }
+          ])
+            .then(({ type }) =>{
+              switch (type) {
+                case 'Employees':
+                  inquirer.prompt([
+                    {
+                      type:'list',
+                      name:'empList',
+                      message:'Which employee would you like to update?',
+                      choices: emp.length
+                    }
+                  ])
+                  .then(({empList}) =>{
+                    let i = emp[]
+
+                  })
+                    .catch(err => console.log(err))
+                  break;
+              
+               
+              }
+            })
 
       }
     })
