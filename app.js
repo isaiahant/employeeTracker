@@ -47,6 +47,8 @@ function Menu() {
                   ])
                     .then(({ depName }) => {
                       depart.push(new Department(depName))
+                      db.query(`INSERT INTO department(name)
+                      VALUES ('${depName})`)
                       Menu()
                     })
                     .catch(err => console.log(err))
@@ -73,6 +75,8 @@ function Menu() {
                   ])
                     .then(({ title, salary, depID }) => {
                       roll.push(new Role(title, salary, depID))
+                      db.query(`INSERT INTO role(title, salary, department_id)
+                      VALUES ('${title}', ${salary}, ${depID})`)
                       Menu()
                     })
                     .catch(err => console.log(err))
@@ -103,6 +107,8 @@ function Menu() {
                   ])
                     .then(({ first, last, role, manager }) => {
                       emp.push(new Employee(first, last, role, manager))
+                      db.query(`INSERT INTO employee(first_name, last_name, role_id, manager)
+                      VALUES ('${first}', '${last}', '${role}', ${manager})`)
                       Menu()
                     })
                     .catch(err => console.log(err))
@@ -133,7 +139,7 @@ function Menu() {
                     }
                   ])
                     .then(({ return}) => {
-                      switch (tables) {
+                      switch (return) {
                         case 'Return to start':
                           Menu()
                           break;
@@ -154,7 +160,7 @@ function Menu() {
                     }
                   ])
                     .then(({ return}) => {
-                      switch (tables) {
+                      switch (return) {
                         case 'Return to start':
                           Menu()
                           break;
@@ -173,7 +179,7 @@ function Menu() {
                     }
                   ])
                     .then(({ return}) => {
-                      switch (tables) {
+                      switch (return) {
                         case 'Return to start':
                           Menu()
                           break;
@@ -206,7 +212,8 @@ function Menu() {
                     }
                   ])
                   .then(({empList}) =>{
-                    let i = emp[]
+                    let i = emp.length.valueOf()
+
 
                   })
                     .catch(err => console.log(err))

@@ -9,5 +9,5 @@ INSERT INTO role(title, salary, department_id)
 VALUES ('Manager', 200000.00, 2)
 
 
-INSERT INTO department(id, name)
-VALUES (2, 'Sales')
+INSERT INTO department(name)
+VALUES ('Sales')
