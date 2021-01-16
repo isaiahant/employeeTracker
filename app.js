@@ -15,7 +15,7 @@ function Menu() {
       type: 'list',
       name: 'menu',
       message: 'What would you like to do?',
-      choices: ['Add', 'View', 'Update']
+      choices: ['Add', 'View', 'Update', 'Finish']
     }
   ])
     .then(({ menu }) => {
@@ -26,7 +26,7 @@ function Menu() {
               type: 'list',
               name: 'adding',
               message: 'What would you like to add?',
-              choices: ['Department', 'Role', 'Employee', 'Finish']
+              choices: ['Department', 'Role', 'Employee']
             }
           ])
             .then(({ adding }) => {
@@ -133,120 +133,114 @@ function Menu() {
                     }
                   ])
                     .then(({ return}) => {
-                      switch (return) {
-                        case 'Return to start':
-                          Menu()
-                          break;
-                      }
-                    })
-                    .catch(err => console.log(err))
-
-
-                  break;
-                case 'Role':
-          db.query('SELECT * FROM role', (err, data) => {
-            if (err) { console.log(err) }
-            console.table(data)
-          })
-                  inquirer.prompt([
-                    {
-                      type: 'list',
-                      name: 'return',
-                      message: 'Return to start when ready.',
-                      choices: ['Return to start']
-                    }
-                  ])
-                    .then(({ return}) => {
-                      switch (return) {
-                        case 'Return to start':
-                          Menu()
-                          break;
-                      }
-                    })
-                    .catch(err => console.log(err))
-                  break;
-                case 'Department'
-                db.query('SELECT * FROM department', (err, data) => {
-                  if (err) { console.log(err) }
-                  console.table(data)
-                  })
-                  inquirer.prompt([
-                    {
-                      type: 'list',
-                      name: 'return',
-                      message: 'Return to start when ready.',
-                      choices: ['Return to start']
-                    }
-                  ])
-                    .then(({ return}) => {
-                      switch (return) {
-                        case 'Return to start':
-                          Menu()
-                          break;
-                      }
-                    })
-                    .catch(err => console.log(err))
+                      if (return === 'Return to start') => {
+                    Menu()
+                  }
                   break;
               }
             })
             .catch(err => console.log(err))
-          break;
-        case 'Update':
+            break;
+            
+
+        case 'Role':
+          db.query('SELECT * FROM role', (err, data) => {
+            if (err) { console.log(err) }
+            console.table(data)
+          })
           inquirer.prompt([
             {
               type: 'list',
-              name: 'type',
-              message: 'What table would you like to update?',
-              choices: ['Employees', 'Roles', 'Departments']
+              name: 'return',
+              message: 'Return to start when ready.',
+              choices: ['Return to start']
             }
           ])
-            .then(({ type }) =>{
-              switch (type) {
-                case 'Employees':
-                  inquirer.prompt([
-                    {
-                      type:'list',
-                      name:'empList',
-                      message:'Which employee would you like to update?',
-                      choices: emp.length
-                    }
-                  ])
-                  .then(({empList}) =>{
-                    inquirer.prompt([
-                      {
-                        type: 'input',
-                        name: 'first',
-                        message: "What is the employee's first name?",
-                      },
-                      {
-                        type: 'input',
-                        name: 'last',
-                        message: "What is the employee's last name?"
-                      },
-                      {
-                        type: 'input',
-                        name: 'role',
-                        message: 'What is the role of the employee?'
-                      },
-                      {
-                        type: 'input',
-                        name: 'manager',
-                        message: "What is the manager's id?"
-                      }
-                    ])
-                    .then(({first, last, role, manager}) =>{
+            .then(({ return}) => {
+              if (return === 'Return to start') => {
+            Menu()
+          }
+      }
+    }) break;
+    .catch(err => console.log(err))
+      case 'Department'
 
-                    })
+  db.query('SELECT * FROM department', (err, data) => {
+    if (err) { console.log(err) }
+    console.table(data)
+  })
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'return',
+      message: 'Return to start when ready.',
+      choices: ['Return to start']
+    }
+  ])
+    .then(({ return}) => {
+      switch (return) {
+                        case 'Return to start':
+    Menu()
+    break;
+  }
+})
+                    .catch (err => console.log(err))
+break;
+              }
+            })
+            .catch (err => console.log(err))
+break;
+        case 'Update':
+inquirer.prompt([
+  {
+    type: 'list',
+    name: 'empList',
+    message: 'Which employee would you like to update?',
+    choices: db.query('SELECT * FROM employee')
+  }
+])
+  .then(({ empList }) => {
+    inquirer.prompt([
+      {
+        type: 'input',
+        name: 'first',
+        message: "What is the employee's first name?",
+      },
+      {
+        type: 'input',
+        name: 'last',
+        message: "What is the employee's last name?"
+      },
+      {
+        type: 'input',
+        name: 'role',
+        message: 'What is the role of the employee?'
+      },
+      {
+        type: 'input',
+        name: 'manager',
+        message: "What is the manager's id?"
+      }
+    ])
+      .then(({ first, last, role, manager }) => {
+        employee = employee[0]
+        let id = db.query('SELECT id FROM employee')
+        db.query(`UPDATE employee SET ? WHERE id = ${id}`, employee, err => {
+          if err { console.log(err); }
+        })
+        Menu()
+      })
+      .catch(err => console.log(err))
 
-                  })
-                    .catch(err => console.log(err))
-                  break;
+  })
+  .catch(err => console.log(err))
+break;
               
                
               }
             })
 
+          })
+          .catch (err => console.log(err))
+        }
       }
-    })
-    .catch(err => console.log(err))
-}
