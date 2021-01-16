@@ -1,7 +1,7 @@
 const mysql = require('mysql2')
 const inquirer = require('inquirer')
 const db = mysql.createConnection('mysql://root:Holytoledo16@localhost/employee_db')
-
+require('console.table')
 
 
 
@@ -179,7 +179,7 @@ function Menu() {
 
         case 'Update':
           const employee = db.query('SELECT * FROM employee', (err, employee) => {
-            if (err) => console.log(err) } 
+            if (err) console.log(err) } 
             )
             const choices = employee.map(first_name =>({
               name: first_name.name,
