@@ -5,14 +5,8 @@ const Department = require('./lib/department')
 const Employee = require('./lib/employee')
 const Role = require('./lib/role')
 
-let depart = []
-let roll = []
-let emp = []
-db.query('SELECT * FROM employee', (err, data) => {
-  if (err) { console.log(err) }
 
-  console.log(data)
-})
+
 
 
 function Menu() {
@@ -46,7 +40,6 @@ function Menu() {
                     }
                   ])
                     .then(({ depName }) => {
-                      depart.push(new Department(depName))
                       db.query(`INSERT INTO department(name)
                       VALUES ('${depName})`)
                       Menu()
@@ -74,7 +67,6 @@ function Menu() {
                     }
                   ])
                     .then(({ title, salary, depID }) => {
-                      roll.push(new Role(title, salary, depID))
                       db.query(`INSERT INTO role(title, salary, department_id)
                       VALUES ('${title}', ${salary}, ${depID})`)
                       Menu()
@@ -106,7 +98,6 @@ function Menu() {
                     }
                   ])
                     .then(({ first, last, role, manager }) => {
-                      emp.push(new Employee(first, last, role, manager))
                       db.query(`INSERT INTO employee(first_name, last_name, role_id, manager)
                       VALUES ('${first}', '${last}', '${role}', ${manager})`)
                       Menu()
@@ -129,7 +120,10 @@ function Menu() {
             .then(({ tables }) => {
               switch (tables) {
                 case 'Employee':
-                  console.table(emp)
+                  db.query('SELECT * FROM employee', (err, data) => {
+                    if (err) { console.log(err) }
+                    console.table(data)
+                  })
                   inquirer.prompt([
                     {
                       type: 'list',
@@ -150,7 +144,10 @@ function Menu() {
 
                   break;
                 case 'Role':
-                  console.table(roll)
+          db.query('SELECT * FROM role', (err, data) => {
+            if (err) { console.log(err) }
+            console.table(data)
+          })
                   inquirer.prompt([
                     {
                       type: 'list',
@@ -169,7 +166,10 @@ function Menu() {
                     .catch(err => console.log(err))
                   break;
                 case 'Department'
-                    console.table(depart)
+                db.query('SELECT * FROM department', (err, data) => {
+                  if (err) { console.log(err) }
+                  console.table(data)
+                  })
                   inquirer.prompt([
                     {
                       type: 'list',
@@ -212,8 +212,31 @@ function Menu() {
                     }
                   ])
                   .then(({empList}) =>{
-                    let i = emp.length.valueOf()
+                    inquirer.prompt([
+                      {
+                        type: 'input',
+                        name: 'first',
+                        message: "What is the employee's first name?",
+                      },
+                      {
+                        type: 'input',
+                        name: 'last',
+                        message: "What is the employee's last name?"
+                      },
+                      {
+                        type: 'input',
+                        name: 'role',
+                        message: 'What is the role of the employee?'
+                      },
+                      {
+                        type: 'input',
+                        name: 'manager',
+                        message: "What is the manager's id?"
+                      }
+                    ])
+                    .then(({first, last, role, manager}) =>{
 
+                    })
 
                   })
                     .catch(err => console.log(err))
